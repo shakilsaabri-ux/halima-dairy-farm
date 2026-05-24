@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Halima Dairy Farm - Premium Light Glassy Edition</title>
+    <style>
+        :root {
+            --bg-main: #f1f5f9;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --glass-card: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: rgba(15, 23, 42, 0.06);
+            
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-mint: #059669;
+            --accent-gold: #d97706;
+            
+            /* Status Base Colors (Optimized for Light Backgrounds) */
+            --color-fali: #2563eb;
+            --color-pregnant: #059669;
+            --color-khali: #dc2626;
+            --color-slaughtered: #d97706;
+            --color-dead: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            line-height: 1.4;
+            padding: 16px;
+            min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- Premium Light Glassy Header --- */
+        header {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(20px) saturate(140%);
+            -webkit-backdrop-filter: blur(20px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            padding: 22px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px 0 var(--glass-shadow);
+        }
+
+        header h1 {
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 900;
+            color: #0f172a;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        header p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+        }
+
+        .header-date {
+            display: inline-block;
+            background: rgba(5, 150, 105, 0.08);
+            border: 1px solid rgba(5, 150, 105, 0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 12px;
+            color: var(--accent-mint);
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Dashboard Grid --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px; 
+            margin-bottom: 24px;
+        }
+
+        .span-2 {
+            grid-column: span 2;
+        }
+
+        .metric-card {
+            background: var(--glass-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px 0 var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .metric-card:hover {
+            background-color: rgba(255, 255, 255, 0.65);
+            box-shadow: 0 6px 24px 0 rgba(15, 23, 42, 0.1);
+        }
+
+        .metric-card:active {
+            transform: scale(0.97);
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: #94a3b8;
+        }
+
+        .card-summary::before { background: var(--accent-mint); }
+        .card-shed-a::before { background: var(--color-fali); }
+        .card-shed-b::before { background: #8b5cf6; }
+        .card-cost-avg::before { background: var(--accent-gold); }
+        .card-noora::before { background: #db2777; }
+        .card-tosif::before { background: #0891b2; }
+        .card-taji-came::before { background: #0d9488; }
+        .card-bakdi-gone::before { background: #e11d48; }
+        .card-cost-kori::before { background: #64748b; }
+        .card-cost-taji::before { background: #0284c7; }
+        .card-slaughtered::before { background: var(--color-slaughtered); }
+        .card-dead::before { background: #475569; }
+        
+        .card-preg-delivery { 
+            background: rgba(5, 150, 105, 0.04);
+            border-color: rgba(5, 150, 105, 0.15);
+        }
+        .card-preg-delivery::before { background: var(--color-pregnant); }
+        .card-preg-delivery:hover {
+            background: rgba(5, 150, 105, 0.08);
+            border-color: rgba(5, 150, 105, 0.3);
+        }
+
+        .card-label {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 6px;
+            pointer-events: none;
+        }
+
+        .card-label small {
+            text-transform: none;
+            font-weight: 600;
+            color: #64748b;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .current-value {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #0f172a;
+            pointer-events: none;
+        }
+
+        .card-cost-avg .current-value { color: var(--accent-gold); }
+        .card-preg-delivery .current-value { color: var(--accent-mint); }
+
+        .click-hint {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            font-weight: 700;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-preg-delivery .click-hint {
+            color: var(--accent-mint);
+            opacity: 1;
+        }
+
+        /* --- Panels --- */
+        .section-panel {
+            background: var(--glass-card);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px 0 var(--glass-shadow);
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: 1.15rem;
+            color: #0f172a;
+            margin-bottom: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            padding-bottom: 10px;
+        }
+
+        .sub-group-heading {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 10px 14px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #0f172a;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            border-left: 5px solid var(--accent-mint);
+            margin-top: 24px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        /* --- Fluid Mobile Form Layout --- */
+        .form-grid-2col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .form-row-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-row-item label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-row-item input, .form-row-item select {
+            width: 100%;
+            min-height: 48px;
+            padding: 0 12px;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.7);
+            outline: none;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        
+        .form-row-item input:focus, .form-row-item select:focus {
+            border-color: var(--accent-mint);
+            background: #ffffff;
+            box-shadow: 0 0 12px rgba(5, 150, 105, 0.15);
+        }
+
+        .btn-submit-entry {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            border: none;
+            min-height: 48px;
+            padding: 0 16px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+            transition: transform 0.1s ease;
+        }
+        .btn-submit-entry:active { transform: translateY(1px); }
+
+        /* --- Dynamic Interactive Log Rows --- */
+        .unified-log-list {
+            margin-bottom: 14px;
+            min-height: 20px;
+        }
+
+        .no-data-msg {
+            padding: 24px;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px dashed rgba(15, 23, 42, 0.12);
+            border-radius: 12px;
+        }
+
+        .log-row-entry {
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            gap: 14px;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .log-row-entry:focus-within {
+            border-color: rgba(5, 150, 105, 0.4);
+            box-shadow: 0 4px 20px rgba(5, 150, 105, 0.08);
+        }
+
+        .row-meta-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tag-title-badge {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--accent-mint);
+            letter-spacing: 0.5px;
+        }
+
+        .khila-info-pill {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .row-dates-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .date-input-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .date-input-field span {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .date-input-field input[type="date"] {
+            border: 1px solid rgba(15, 23, 42, 0.1);
+            border-radius: 8px;
+            min-height: 44px;
+            padding: 0 10px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            width: 100%;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .lactation-output-box {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--accent-mint);
+        }
+
+        .row-interactive-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-top: 2px;
+            padding-top: 12px;
+            border-top: 1px dashed rgba(15, 23, 42, 0.08);
+        }
+
+        .status-pill-select, .action-popup-select {
+            min-height: 44px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 0 12px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            outline: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .action-popup-select {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(15, 23, 42, 0.1);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* Rich Pastel Status Tints with Dark Contrasting Text */
+        .bg-fali { 
+            background-color: rgba(37, 99, 235, 0.12); 
+            color: var(--color-fali);
+            border-color: rgba(37, 99, 235, 0.2);
+        }
+        .bg-pregnant { 
+            background-color: rgba(5, 150, 105, 0.12); 
+            color: var(--color-pregnant);
+            border-color: rgba(5, 150, 105, 0.2);
+        }
+        .bg-khali { 
+            background-color: rgba(220, 38, 38, 0.12); 
+            color: var(--color-khali);
+            border-color: rgba(220, 38, 38, 0.2);
+        }
+        .bg-slaughtered { 
+            background-color: rgba(217, 119, 6, 0.15); 
+            color: var(--color-slaughtered);
+            border-color: rgba(217, 119, 6, 0.2);
+        }
+        .bg-dead { 
+            background-color: rgba(100, 116, 139, 0.15); 
+            color: var(--color-dead);
+            border-color: rgba(100, 116, 139, 0.2);
+        }
+
+        /* --- Premium White Glass Overlay Page --- */
+        .page-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(241, 245, 249, 0.92); 
+            backdrop-filter: blur(25px) saturate(140%);
+            -webkit-backdrop-filter: blur(25px) saturate(140%);
+            z-index: 9999;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .overlay-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--glass-border);
+            padding: 16px;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 20px var(--glass-shadow);
+        }
+
+        .overlay-header h3 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-close-page {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(15, 23, 42, 0.1);
+            color: var(--text-primary);
+            min-height: 40px;
+            padding: 0 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-close-page:hover { background: rgba(220, 38, 38, 0.1); border-color: var(--color-khali); color: var(--color-khali); }
+
+        .sub-section-title {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            margin: 24px 0 12px 0;
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+            border-left: 5px solid var(--accent-mint);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pop-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            overflow: hidden;
+            font-size: 0.88rem;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 15px var(--glass-shadow);
+        }
+
+        .pop-table th, .pop-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+            text-align: left;
+        }
+
+        .pop-table tr:last-child td { border-bottom: none; }
+
+        .pop-table th {
+            background-color: rgba(15, 23, 42, 0.03);
+            font-weight: 800;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <div>
+            <h1>Halima Dairy Farm</h1>
+            <span class="header-date id-header-today">--/--/----</span>
+        </div>
+        <p>Premium Herd Management</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <button class="metric-card card-summary span-2" onclick="openDetailModal('TOTAL_ACTIVE')">
+            <span class="card-label">Total Active Herd Summary<small>(Live Animals + Static Stock)</small></span>
+            <div>
+                <span class="current-value" id="stat-total-active">0</span>
+            </div>
+            <div class="click-hint">➔ Tap to view details</div>
+        </button>
+
+        <button class="metric-card card-shed-a" onclick="openDetailModal('SHED_A')">
+            <span class="card-label">Shed A Total</span>
+            <div>
+                <span class="current-value" id="stat-shed-a">0</span>
+            </div>
+            <div class="click-hint">➔ View animals</div>
+        </button>
+
+        <button class="metric-card card-shed-b" onclick="openDetailModal('SHED_B')">
+            <span class="card-label">Shed B Total</span>
+            <div>
+                <span class="current-value" id="stat-shed-b">0</span>
+            </div>
+            <div class="click-hint">➔ View animals</div>
+        </button>
+
+        <button class="metric-card card-cost-avg span-2" onclick="openDetailModal('AVG_COST')">
+            <span class="card-label">Avg Monthly Cost / Buffalo<small>(Kori + Taji Bill) ÷ Arrived Animals</small></span>
+            <div>
+                <span class="current-value">₹76,000</span>
+            </div>
+            <div class="click-hint">➔ View detailed breakdown ledger</div>
+        </button>
+
+        <button class="metric-card card-noora" onclick="openDetailModal('NOORA')">
+            <span class="card-label">Noora Stock</span>
+            <div>
+                <span class="current-value">40</span>
+            </div>
+            <div class="click-hint">➔ View ledger entries</div>
+        </button>
+
+        <button class="metric-card card-tosif" onclick="openDetailModal('TOSIF')">
+            <span class="card-label">Tosif Stock</span>
+            <div>
+                <span class="current-value">20</span>
+            </div>
+            <div class="click-hint">➔ View ledger entries</div>
+        </button>
+
+        <button class="metric-card card-taji-came" onclick="openDetailModal('TAJI_CAME')">
+            <span class="card-label">Taji Came</span>
+            <div>
+                <span class="current-value">8</span>
+            </div>
+            <div class="click-hint">➔ View log entries</div>
+        </button>
+
+        <button class="metric-card card-bakdi-gone" onclick="openDetailModal('BAKDI_GONE')">
+            <span class="card-label">Bakdi Gone</span>
+            <div>
+                <span class="current-value">3</span>
+            </div>
+            <div class="click-hint">➔ View log entries</div>
+        </button>
+
+        <button class="metric-card card-cost-kori" onclick="openDetailModal('KORI_COST')">
+            <span class="card-label">Avg Cost Kori</span>
+            <div>
+                <span class="current-value">₹85,000</span>
+            </div>
+            <div class="click-hint">➔ View ledger calculations</div>
+        </button>
+
+        <button class="metric-card card-cost-taji" onclick="openDetailModal('TAJI_COST')">
+            <span class="card-label">Avg Cost Taji</span>
+            <div>
+                <span class="current-value">₹62,500</span>
+            </div>
+            <div class="click-hint">➔ View ledger calculations</div>
+        </button>
+
+        <button class="metric-card card-slaughtered" onclick="openDetailModal('SLAUGHTERED')">
+            <span class="card-label">Slaughtered<small>Current Month</small></span>
+            <div>
+                <span class="current-value" id="stat-slaughtered">0</span>
+            </div>
+            <div class="click-hint">➔ View logs</div>
+        </button>
+
+        <button class="metric-card card-dead" onclick="openDetailModal('DEAD')">
+            <span class="card-label">Dead Records<small>Current Month</small></span>
+            <div>
+                <span class="current-value" id="stat-dead">0</span>
+            </div>
+            <div class="click-hint">➔ View logs</div>
+        </button>
+
+        <button class="metric-card card-preg-delivery span-2" onclick="openPregnancyPage();">
+            <div>
+                <span class="card-label">Over 7 Months Pregnant Buffaloes<small>Month-wise expected delivery list</small></span>
+                <div>
+                    <span class="current-value" id="stat-pregnant-count">0</span>
+                </div>
+            </div>
+            <div class="click-hint">➔ Tap to view Tag, Khila & Shed records</div>
+        </button>
+    </div>
+
+    <div class="section-panel">
+        <h2>Animal Registration Log</h2>
+
+        <form id="frm-add-animal" onsubmit="event.preventDefault(); appendNewAnimalRow();">
+            <div class="form-grid-2col">
+                <div class="form-row-item">
+                    <label>Tag Number</label>
+                    <input type="text" id="new-tag-no" placeholder="e.g. 1900" required>
+                </div>
+                <div class="form-row-item">
+                    <label>Khila No.</label>
+                    <input type="number" id="new-khila" placeholder="e.g. 5" min="1">
+                </div>
+            </div>
+
+            <div class="form-grid-2col">
+                <div class="form-row-item">
+                    <label>Inbound Date</label>
+                    <input type="date" id="new-date-in" required>
+                </div>
+                <div class="form-row-item">
+                    <label>Outbound Date</label>
+                    <input type="date" id="new-date-out">
+                </div>
+            </div>
+
+            <div class="form-grid-2col">
+                <div class="form-row-item">
+                    <label>Shed Assignment</label>
+                    <select id="new-shed">
+                        <option value="A">Shed A</option>
+                        <option value="B">Shed B</option>
+                    </select>
+                </div>
+                <div class="form-row-item">
+                    <label>Status Classification</label>
+                    <select id="new-status">
+                        <option value="FALI">FALI</option>
+                        <option value="Pregnant">Pregnant</option>
+                        <option value="Khali">Khali</option>
+                        <option value="Slaughtered">Slaughtered</option>
+                        <option value="DEAD">DEAD</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn-submit-entry">Add New Record &nbsp;+</button>
+        </form>
+
+        <div class="sub-group-heading">Shed A - Animal Records</div>
+        <div class="unified-log-list" id="shed-a-list-wrapper"></div>
+
+        <div class="sub-group-heading">Shed B - Animal Records</div>
+        <div class="unified-log-list" id="shed-b-list-wrapper"></div>
+    </div>
+</div>
+
+<div id="detail-overlay-page" class="page-overlay">
+    <div class="overlay-header">
+        <h3 id="detail-overlay-title">Metric Details</h3>
+        <button class="btn-close-page" onclick="closeDetailModal();">✕ Close</button>
+    </div>
+    
+    <p id="detail-overlay-desc" style="color: var(--text-secondary); margin-bottom: 16px; font-size: 0.82rem; padding: 0 4px;"></p>
+
+    <div style="overflow-x:auto;">
+        <table class="pop-table">
+            <thead id="detail-overlay-table-head">
+                </thead>
+            <tbody id="detail-overlay-table-rows">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="preg-overlay-page" class="page-overlay">
+    <div class="overlay-header">
+        <h3>Over 7 Months Pregnant</h3>
+        <button class="btn-close-page" onclick="closePregnancyPage();">✕ Close</button>
+    </div>
+    
+    <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 0.82rem; padding: 0 4px;">
+        High-risk tracking schedule cataloged <strong>Shed-Wise</strong>.
+    </p>
+
+    <div class="sub-section-title">Shed A Listing</div>
+    <div style="overflow-x:auto; margin-bottom: 18px;">
+        <table class="pop-table">
+            <thead>
+                <tr>
+                    <th>Tag No.</th>
+                    <th>Khila No.</th>
+                    <th>Fali Date</th>
+                    <th>Lactation</th>
+                </tr>
+            </thead>
+            <tbody id="preg-shed-a-rows"></tbody>
+        </table>
+    </div>
+
+    <div class="sub-section-title">Shed B Listing</div>
+    <div style="overflow-x:auto;">
+        <table class="pop-table">
+            <thead>
+                <tr>
+                    <th>Tag No.</th>
+                    <th>Khila No.</th>
+                    <th>Fali Date</th>
+                    <th>Lactation</th>
+                </tr>
+            </thead>
+            <tbody id="preg-shed-b-rows"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const defaultData = [
+        { id: "1", tag: "1900", khila: "1", dateIn: "2026-01-01", dateOut: "2026-05-15", shed: "A", status: "FALI", faliDate: "2026-01-05" },
+        { id: "2", tag: "1232", khila: "2", dateIn: "2026-02-01", dateOut: "", shed: "A", status: "Pregnant", faliDate: "2026-02-10" },
+        { id: "3", tag: "1405", khila: "14", dateIn: "2025-12-10", dateOut: "", shed: "B", status: "Pregnant", faliDate: "2025-12-28" },
+        { id: "4", tag: "1700", khila: "5", dateIn: "2025-11-15", dateOut: "2026-05-15", shed: "B", status: "Khali", faliDate: "" }
+    ];
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const today = new Date();
+        document.querySelector('.id-header-today').textContent = today.toLocaleDateString('en-GB', {
+            day: 'numeric', month: 'short', year: 'numeric'
+        });
+
+        if(document.getElementById('new-date-in')) {
+            document.getElementById('new-date-in').value = today.toISOString().split('T')[0];
+        }
+
+        loadHerdData();
+    });
+
+    function getLocalRecords() {
+        let stored = localStorage.getItem('halima_herd_records');
+        return stored ? JSON.parse(stored) : defaultData;
+    }
+
+    function saveHerdData() {
+        const activeRecords = [];
+        document.querySelectorAll('.log-row-entry').forEach(row => {
+            activeRecords.push({
+                id: row.getAttribute('data-id') || Math.random().toString(),
+                tag: row.querySelector('.tag-title-badge').innerText.replace('#', ''),
+                khila: row.querySelector('.khila-val').innerText,
+                dateIn: row.querySelector('.date-in').value,
+                dateOut: row.querySelector('.date-out').value,
+                shed: row.getAttribute('data-shed'),
+                status: row.querySelector('.status-pill-select').value,
+                faliDate: row.getAttribute('data-fali-date') || ''
+            });
+        });
+        localStorage.setItem('halima_herd_records', JSON.stringify(activeRecords));
+        recalculateDashboardMetrics();
+    }
+
+    function loadHerdData() {
+        let records = getLocalRecords();
+        document.getElementById('shed-a-list-wrapper').innerHTML = '';
+        document.getElementById('shed-b-list-wrapper').innerHTML = '';
+
+        records.forEach(item => renderItemRow(item));
+        recalculateDashboardMetrics();
+    }
+
+    function renderItemRow(item) {
+        const container = item.shed === 'A' ? document.getElementById('shed-a-list-wrapper') : document.getElementById('shed-b-list-wrapper');
+        const row = document.createElement('div');
+        row.className = 'log-row-entry';
+        row.setAttribute('data-id', item.id);
+        row.setAttribute('data-shed', item.shed);
+        row.setAttribute('data-fali-date', item.faliDate || '');
+
+        row.innerHTML = `
+            <div class="row-meta-header">
+                <span class="tag-title-badge">#${item.tag}</span>
+                <span class="khila-info-pill">Khila: <span class="khila-val">${item.khila}</span></span>
+            </div>
+            <div class="row-dates-grid">
+                <div class="date-input-field">
+                    <span>In Date</span>
+                    <input type="date" class="date-in" value="${item.dateIn}">
+                </div>
+                <div class="date-input-field">
+                    <span>Out Date</span>
+                    <input type="date" class="date-out" value="${item.dateOut || ''}">
+                </div>
+            </div>
+            <div class="row-interactive-controls">
+                <div>
+                    <span style="font-size:0.65rem; color:var(--text-secondary); display:block; text-transform:uppercase; font-weight:700;">Lactation</span>
+                    <span class="lactation-output-box calculated-days">--</span>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <select class="status-pill-select">
+                        <option value="FALI" ${item.status === 'FALI' ? 'selected' : ''}>FALI</option>
+                        <option value="Pregnant" ${item.status === 'Pregnant' ? 'selected' : ''}>Pregnant</option>
+                        <option value="Khali" ${item.status === 'Khali' ? 'selected' : ''}>Khali</option>
+                        <option value="Slaughtered" ${item.status === 'Slaughtered' ? 'selected' : ''}>Slaughtered</option>
+                        <option value="DEAD" ${item.status === 'DEAD' ? 'selected' : ''}>DEAD</option>
+                    </select>
+                    <select class="action-popup-select">
+                        <option selected value="-">Action</option>
+                        <option value="Delete">Delete</option>
+                        <option value="Slaughtered">Slaughtered</option>
+                        <option value="DEAD">DEAD</option>
+                    </select>
+                </div>
+            </div>
+        `;
+
+        container.appendChild(row);
+        bindRowInteractivity(row);
+    }
+
+    function bindRowInteractivity(row) {
+        const inputIn = row.querySelector('.date-in');
+        const inputOut = row.querySelector('.date-out');
+        const statusSelector = row.querySelector('.status-pill-select');
+        const actionSelector = row.querySelector('.action-popup-select');
+
+        calculateLactationDays(row);
+        updateStatusColor(statusSelector);
+
+        statusSelector.addEventListener('change', () => {
+            updateStatusColor(statusSelector);
+            saveHerdData();
+        });
+
+        inputIn.addEventListener('change', () => {
+            calculateLactationDays(row);
+            saveHerdData();
+        });
+
+        inputOut.addEventListener('change', () => {
+            calculateLactationDays(row);
+            saveHerdData();
+        });
+
+        actionSelector.addEventListener('change', function() {
+            if(actionSelector.value === 'Delete') {
+                if(confirm("Permanently delete this animal entry record?")) {
+                    row.remove();
+                    saveHerdData();
+                } else {
+                    actionSelector.value = "-";
+                }
+            } else if(actionSelector.value === 'Slaughtered' || actionSelector.value === 'DEAD') {
+                statusSelector.value = actionSelector.value;
+                updateStatusColor(statusSelector);
+                if(!inputOut.value) {
+                    inputOut.value = new Date().toISOString().split('T')[0];
+                    calculateLactationDays(row);
+                }
+                actionSelector.value = "-";
+                saveHerdData();
+            }
+        });
+    }
+
+    function calculateLactationDays(row) {
+        const inDateVal = row.querySelector('.date-in').value;
+        const outDateVal = row.querySelector('.date-out').value;
+        const outputSpan = row.querySelector('.calculated-days');
+
+        if (inDateVal && outDateVal) {
+            const diffTime = new Date(outDateVal) - new Date(inDateVal);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            outputSpan.textContent = diffDays >= 0 ? diffDays + " days" : "Invalid";
+        } else {
+            outputSpan.textContent = "-- days";
+        }
+    }
+
+    function updateStatusColor(selectElement) {
+        const val = selectElement.value.toLowerCase();
+        selectElement.classList.remove('bg-fali', 'bg-pregnant', 'bg-khali', 'bg-slaughtered', 'bg-dead');
+        if (val === 'fali') selectElement.classList.add('bg-fali');
+        else if (val === 'pregnant') selectElement.classList.add('bg-pregnant');
+        else if (val === 'khali') selectElement.classList.add('bg-khali');
+        else if (val === 'slaughtered') selectElement.classList.add('bg-slaughtered');
+        else if (val === 'dead') selectElement.classList.add('bg-dead');
+    }
+
+    function recalculateDashboardMetrics() {
+        let activeShedA = 0;
+        let activeShedB = 0;
+        let totalPregnant = 0;
+        let slaughteredThisMonth = 0;
+        let deadThisMonth = 0;
+
+        const currentMonthStr = new Date().toISOString().substring(0, 7);
+
+        document.querySelectorAll('.log-row-entry').forEach(row => {
+            const shed = row.getAttribute('data-shed');
+            const status = row.querySelector('.status-pill-select').value;
+            const outDate = row.querySelector('.date-out').value;
+
+            if (status !== 'DEAD' && status !== 'Slaughtered') {
+                if (shed === 'A') activeShedA++;
+                if (shed === 'B') activeShedB++;
+                if (status === 'Pregnant') totalPregnant++;
+            }
+
+            if (outDate && outDate.substring(0, 7) === currentMonthStr) {
+                if (status === 'Slaughtered') slaughteredThisMonth++;
+                if (status === 'DEAD') deadThisMonth++;
+            }
+        });
+
+        document.getElementById('stat-shed-a').textContent = activeShedA;
+        document.getElementById('stat-shed-b').textContent = activeShedB;
+        
+        const staticStockTotal = 40 + 20; 
+        document.getElementById('stat-total-active').textContent = activeShedA + activeShedB + staticStockTotal;
+        
+        document.getElementById('stat-pregnant-count').textContent = totalPregnant;
+        document.getElementById('stat-slaughtered').textContent = slaughteredThisMonth;
+        document.getElementById('stat-dead').textContent = deadThisMonth;
+
+        togglePlaceholderMsg('shed-a-list-wrapper', activeShedA === 0 && document.querySelectorAll('.log-row-entry[data-shed="A"]').length === 0);
+        togglePlaceholderMsg('shed-b-list-wrapper', activeShedB === 0 && document.querySelectorAll('.log-row-entry[data-shed="B"]').length === 0);
+    }
+
+    function togglePlaceholderMsg(wrapperId, shouldShow) {
+        const wrapper = document.getElementById(wrapperId);
+        const existing = wrapper.querySelector('.no-data-msg');
+        if (shouldShow && !existing) {
+            wrapper.innerHTML = `<div class="no-data-msg">No animal logs tracked under this shed.</div>`;
+        } else if (!shouldShow && existing) {
+            existing.remove();
+        }
+    }
+
+    function appendNewAnimalRow() {
+        const tag = document.getElementById('new-tag-no').value;
+        const dateIn = document.getElementById('new-date-in').value;
+        const dateOut = document.getElementById('new-date-out').value;
+        const status = document.getElementById('new-status').value;
+        const khila = document.getElementById('new-khila').value || '-';
+        const shedGroup = document.getElementById('new-shed').value;
+
+        const defaultFaliDate = status === 'Pregnant' ? new Date().toISOString().split('T')[0] : '';
+
+        const newRecord = {
+            id: Math.random().toString(),
+            tag: tag,
+            khila: khila,
+            dateIn: dateIn,
+            dateOut: dateOut,
+            shed: shedGroup,
+            status: status,
+            faliDate: defaultFaliDate
+        };
+
+        const container = shedGroup === 'A' ? document.getElementById('shed-a-list-wrapper') : document.getElementById('shed-b-list-wrapper');
+        const emptyMsg = container.querySelector('.no-data-msg');
+        if(emptyMsg) emptyMsg.remove();
+
+        const row = document.createElement('div');
+        row.className = 'log-row-entry';
+        row.setAttribute('data-id', newRecord.id);
+        row.setAttribute('data-shed', newRecord.shed);
+        row.setAttribute('data-fali-date', newRecord.faliDate);
+
+        row.innerHTML = `
+            <div class="row-meta-header">
+                <span class="tag-title-badge">#${newRecord.tag}</span>
+                <span class="khila-info-pill">Khila: <span class="khila-val">${newRecord.khila}</span></span>
+            </div>
+            <div class="row-dates-grid">
+                <div class="date-input-field">
+                    <span>In Date</span>
+                    <input type="date" class="date-in" value="${newRecord.dateIn}">
+                </div>
+                <div class="date-input-field">
+                    <span>Out Date</span>
+                    <input type="date" class="date-out" value="${newRecord.dateOut}">
+                </div>
+            </div>
+            <div class="row-interactive-controls">
+                <div>
+                    <span style="font-size:0.65rem; color:var(--text-secondary); display:block; text-transform:uppercase; font-weight:700;">Lactation</span>
+                    <span class="lactation-output-box calculated-days">--</span>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <select class="status-pill-select">
+                        <option value="FALI" ${newRecord.status === 'FALI' ? 'selected' : ''}>FALI</option>
+                        <option value="Pregnant" ${newRecord.status === 'Pregnant' ? 'selected' : ''}>Pregnant</option>
+                        <option value="Khali" ${newRecord.status === 'Khali' ? 'selected' : ''}>Khali</option>
+                        <option value="Slaughtered" ${newRecord.status === 'Slaughtered' ? 'selected' : ''}>Slaughtered</option>
+                        <option value="DEAD" ${newRecord.status === 'DEAD' ? 'selected' : ''}>DEAD</option>
+                    </select>
+                    <select class="action-popup-select">
+                        <option selected value="-">Action</option>
+                        <option value="Delete">Delete</option>
+                        <option value="Slaughtered">Slaughtered</option>
+                        <option value="DEAD">DEAD</option>
+                    </select>
+                </div>
+            </div>
+        `;
+
+        container.insertBefore(row, container.firstChild);
+        bindRowInteractivity(row);
+        saveHerdData();
+
+        document.getElementById('new-tag-no').value = '';
+        document.getElementById('new-date-out').value = '';
+        document.getElementById('new-khila').value = '';
+    }
+
+    /* --- Universal Interactivity Engine: Maps clicked dashboard boxes to active table lists --- */
+    function openDetailModal(metricType) {
+        const titleEl = document.getElementById('detail-overlay-title');
+        const descEl = document.getElementById('detail-overlay-desc');
+        const theadEl = document.getElementById('detail-overlay-table-head');
+        const tbodyEl = document.getElementById('detail-overlay-table-rows');
+
+        tbodyEl.innerHTML = '';
+        let records = getLocalRecords();
+        const currentMonthStr = new Date().toISOString().substring(0, 7);
+
+        // Standard dynamic column headers mapping
+        let standardHeaders = `
+            <tr>
+                <th>Tag No.</th>
+                <th>Shed</th>
+                <th>Khila No.</th>
+                <th>Current Status</th>
+            </tr>
+        `;
+        theadEl.innerHTML = standardHeaders;
+
+        switch(metricType) {
+            case 'TOTAL_ACTIVE':
+                titleEl.innerText = "Total Active Herd Summary";
+                descEl.innerText = "All animal inventory currently registered and operating live across facilities.";
+                records.filter(r => r.status !== 'DEAD' && r.status !== 'Slaughtered').forEach(r => appendPopRow(tbodyEl, r));
+                appendStaticStockPlaceholders(tbodyEl);
+                break;
+
+            case 'SHED_A':
+                titleEl.innerText = "Shed A Animals";
+                descEl.innerText = "Live animal entries assigned to Shed A.";
+                records.filter(r => r.shed === 'A' && r.status !== 'DEAD' && r.status !== 'Slaughtered').forEach(r => appendPopRow(tbodyEl, r));
+                break;
+
+            case 'SHED_B':
+                titleEl.innerText = "Shed B Animals";
+                descEl.innerText = "Live animal entries assigned to Shed B.";
+                records.filter(r => r.shed === 'B' && r.status !== 'DEAD' && r.status !== 'Slaughtered').forEach(r => appendPopRow(tbodyEl, r));
+                break;
+
+            case 'AVG_COST':
+                titleEl.innerText = "Average Monthly Cost Breakdown";
+                descEl.innerText = "Calculated operational balances divided dynamically across tracking books.";
+                theadEl.innerHTML = `<tr><th>Ledger Description</th><th>Value Allocation</th></tr>`;
+                tbodyEl.innerHTML = `
+                    <tr><td><strong>Base Kori Asset Valuation</strong></td><td style="color:var(--accent-gold); font-weight:800;">₹85,000</td></tr>
+                    <tr><td><strong>Return Taji Logistics Ledger</strong></td><td style="color:var(--accent-mint); font-weight:800;">₹62,500</td></tr>
+                    <tr><td><strong>Consolidated Multi-Book Target Average</strong></td><td><strong>₹76,000 per Head</strong></td></tr>
+                `;
+                break;
+
+            case 'NOORA':
+                titleEl.innerText = "Noora Account Balance Ledger";
+                descEl.innerText = "Archived livestock counts managed under Noora stock books.";
+                theadEl.innerHTML = `<tr><th>Account Class</th><th>Static Allocated Units</th></tr>`;
+                tbodyEl.innerHTML = `<tr><td><strong>Noora Live Holding Allocation</strong></td><td style="font-weight:800; color:#db2777;">40 Head</td></tr>`;
+                break;
+
+            case 'TOSIF':
+                titleEl.innerText = "Tosif Account Balance Ledger";
+                descEl.innerText = "Archived livestock counts managed under Tosif stock books.";
+                theadEl.innerHTML = `<tr><th>Account Class</th><th>Static Allocated Units</th></tr>`;
+                tbodyEl.innerHTML = `<tr><td><strong>Tosif Live Holding Allocation</strong></td><td style="font-weight:800; color:#0891b2;">20 Head</td></tr>`;
+                break;
+
+            case 'TAJI_CAME':
+                titleEl.innerText = "Taji Came Returns Log";
+                descEl.innerText = "Static historical metrics tracked for incoming livestock books.";
+                theadEl.innerHTML = `<tr><th>Metric Account</th><th>Total Cycles Managed</th></tr>`;
+                tbodyEl.innerHTML = `<tr><td><strong>Taji Arrival Register Count</strong></td><td style="font-weight:800; color:#0d9488;">8 Cycles Current Period</td></tr>`;
+                break;
+
+            case 'BAKDI_GONE':
+                titleEl.innerText = "Bakdi Gone Outbound Log";
+                descEl.innerText = "Static historical metrics tracked for outbound livestock books.";
+                theadEl.innerHTML = `<tr><th>Metric Account</th><th>Total Cycles Managed</th></tr>`;
+                tbodyEl.innerHTML = `<tr><td><strong>Bakdi Outbound Register Count</strong></td><td style="font-weight:800; color:#e11d48;">3 Cycles Current Period</td></tr>`;
+                break;
+
+            case 'KORI_COST':
+                titleEl.innerText = "Avg Cost Kori Valuation Ledger";
+                descEl.innerText = "Allocated expense ledger records matching Kori parameters.";
+                theadEl.innerHTML = `<tr><th>Expense Class</th><th>Rate Value</th></tr>`;
+                tbodyEl.innerHTML = `<tr><td><strong>Kori Allocation Premium Average</strong></td><td style="font-weight:800; color:#64748b;">₹85,000</td></tr>`;
+                break;
+
+            case 'TAJI_COST':
+                titleEl.innerText = "Avg Cost Taji Valuation Ledger";
+                descEl.innerText = "Allocated expense ledger records matching Taji parameters.";
+                theadEl.innerHTML = `<tr><th>Expense Class</th><th>Rate Value</th></tr>`;
+                tbodyEl.innerHTML = `<tr><td><strong>Taji Allocation Premium Average</strong></td><td style="font-weight:800; color:#0284c7;">₹62,500</td></tr>`;
+                break;
+
+            case 'SLAUGHTERED':
+                titleEl.innerText = "Slaughtered Logs (Current Month)";
+                descEl.innerText = "Animals converted to slaughtered records during the current active month.";
+                records.filter(r => r.status === 'Slaughtered' && r.dateOut && r.dateOut.substring(0, 7) === currentMonthStr).forEach(r => appendPopRow(tbodyEl, r));
+                break;
+
+            case 'DEAD':
+                titleEl.innerText = "Dead Records Log (Current Month)";
+                descEl.innerText = "Animals categorized under mortality during the current active month.";
+                records.filter(r => r.status === 'DEAD' && r.dateOut && r.dateOut.substring(0, 7) === currentMonthStr).forEach(r => appendPopRow(tbodyEl, r));
+                break;
+        }
+
+        if(tbodyEl.innerHTML.trim() === '') {
+            tbodyEl.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-secondary); padding:30px;">No operational logs match this card metric selection.</td></tr>`;
+        }
+
+        document.getElementById('detail-overlay-page').style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    function appendPopRow(targetTableBody, item) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><strong>#${item.tag}</strong></td>
+            <td><span class="khila-info-pill" style="background:rgba(15,23,42,0.04);">Shed ${item.shed}</span></td>
+            <td><span style="font-weight:700;">Khila ${item.khila}</span></td>
+            <td><span class="badge" style="font-weight:800; font-size:0.75rem;">${item.status}</span></td>
+        `;
+        
+        // Dynamically style status text colors matching master setup specs
+        const badge = tr.querySelector('.badge');
+        const status = item.status.toLowerCase();
+        if(status === 'fali') badge.style.color = 'var(--color-fali)';
+        else if(status === 'pregnant') badge.style.color = 'var(--color-pregnant)';
+        else if(status === 'khali') badge.style.color = 'var(--color-khali)';
+        else if(status === 'slaughtered') badge.style.color = 'var(--color-slaughtered)';
+        else if(status === 'dead') badge.style.color = 'var(--color-dead)';
+
+        targetTableBody.appendChild(tr);
+    }
+
+    function appendStaticStockPlaceholders(tbodyEl) {
+        tbodyEl.innerHTML += `
+            <tr style="opacity:0.75; background:rgba(219,39,119,0.02);"><td>Noora Static Stock Pool</td><td><span class="khila-info-pill">External</span></td><td>-</td><td style="color:#db2777; font-weight:700;">40 Head Allocation</td></tr>
+            <tr style="opacity:0.75; background:rgba(8,145,178,0.02);"><td>Tosif Static Stock Pool</td><td><span class="khila-info-pill">External</span></td><td>-</td><td style="color:#0891b2; font-weight:700;">20 Head Allocation</td></tr>
+        `;
+    }
+
+    function closeDetailModal() {
+        document.getElementById('detail-overlay-page').style.display = 'none';
+    }
+
+    function openPregnancyPage() {
+        const targetA = document.getElementById('preg-shed-a-rows');
+        const targetB = document.getElementById('preg-shed-b-rows');
+        
+        targetA.innerHTML = '';
+        targetB.innerHTML = '';
+
+        let hasA = false, hasB = false;
+
+        document.querySelectorAll('.log-row-entry').forEach(row => {
+            const statusBox = row.querySelector('.status-pill-select');
+            if(statusBox && statusBox.value === 'Pregnant') {
+                const tagNo = row.querySelector('.tag-title-badge').innerText.replace('#', '');
+                const khilaNo = row.querySelector('.khila-val').innerText;
+                const faliDate = row.getAttribute('data-fali-date') || '--';
+                const lactPeriod = row.querySelector('.calculated-days').textContent;
+                const shedGroup = row.getAttribute('data-shed') || 'A';
+
+                const rowHtml = `
+                    <tr>
+                        <td><strong>#${tagNo}</strong></td>
+                        <td><span style="background:rgba(15, 23, 42, 0.05); padding:4px 10px; border-radius:6px; font-weight:800; border:1px solid rgba(15, 23, 42, 0.08); color:var(--text-primary);">${khilaNo}</span></td>
+                        <td>${faliDate}</td>
+                        <td style="color:var(--accent-mint); font-weight:800;">${lactPeriod}</td>
+                    </tr>
+                `;
+
+                if(shedGroup === 'A') {
+                    targetA.innerHTML += rowHtml;
+                    hasA = true;
+                } else {
+                    targetB.innerHTML += rowHtml;
+                    hasB = true;
+                }
+            }
+        });
+
+        if(!hasA) targetA.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-secondary); padding: 20px;">No matching records in Shed A</td></tr>`;
+        if(!hasB) targetB.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-secondary); padding: 20px;">No matching records in Shed B</td></tr>`;
+
+        document.getElementById('preg-overlay-page').style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    function closePregnancyPage() {
+        document.getElementById('preg-overlay-page').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
