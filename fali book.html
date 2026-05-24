@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FALI BOOK PRO - Premium Glassy Edition</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --glass-card: rgba(255, 255, 255, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: rgba(15, 23, 42, 0.05);
+            
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-dark: #0f172a;
+            --accent-mint: #059669;
+            
+            /* Status Base Colors */
+            --color-fali: #2563eb;
+            --color-pregnant: #059669;
+            --color-khali: #dc2626;
+            --color-repeat: #d97706;
+            --color-treatment: #8b5cf6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            padding: 14px;
+            color: var(--text-primary);
+            min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* --- Premium Header --- */
+        .header {
+            background: var(--glass-card);
+            backdrop-filter: blur(20px) saturate(140%);
+            -webkit-backdrop-filter: blur(20px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+        }
+
+        .header p {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* --- Grid Layouts & Interactive Metric Cards --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .metric-card {
+            background: var(--glass-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 4px 20px var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+        }
+        
+        .metric-card:hover {
+            background: rgba(255, 255, 255, 0.75);
+        }
+
+        .metric-card:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 10px var(--glass-shadow);
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+        }
+
+        .blue::before { background: var(--color-fali); }
+        .green::before { background: var(--color-pregnant); }
+        .red::before { background: var(--color-khali); }
+        .orange::before { background: var(--color-repeat); }
+        .purple::before { background: var(--color-treatment); }
+
+        .metric-title {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--text-primary);
+        }
+
+        /* --- Containers --- */
+        .card-box {
+            background: var(--glass-card);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--glass-border);
+            padding: 18px;
+            border-radius: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding-bottom: 8px;
+        }
+
+        /* --- Month Summary Grid --- */
+        .month-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .month-box {
+            height: 60px;
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.06);
+            background: rgba(255,255,255,0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+
+        .month-box:hover {
+            background: rgba(255,255,255,0.7);
+        }
+
+        .month-box:active {
+            transform: scale(0.94);
+        }
+
+        .month-name {
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .month-count {
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--text-primary);
+        }
+
+        /* --- Interactive Inputs & Buttons --- */
+        .dashboard-btn {
+            width: 100%;
+            min-height: 48px;
+            border: none;
+            border-radius: 14px;
+            background: var(--accent-dark);
+            color: white;
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+        .dashboard-btn:active { transform: scale(0.99); }
+
+        label {
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .form-control, .form-select {
+            min-height: 44px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--text-primary);
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--color-fali);
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.15);
+            background: white;
+        }
+
+        textarea.form-control {
+            min-height: 68px;
+        }
+
+        .btn-save {
+            width: 100%;
+            min-height: 48px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+        }
+
+        /* --- Tables --- */
+        .table-card {
+            overflow: auto;
+        }
+
+        table {
+            min-width: 850px;
+        }
+
+        .table thead {
+            background: rgba(15, 23, 42, 0.04);
+        }
+
+        .table th {
+            font-size: 11px;
+            padding: 12px 8px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            border-bottom: 2px solid rgba(0,0,0,0.06);
+        }
+
+        .table td {
+            font-size: 12px;
+            padding: 12px 8px;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+        }
+
+        /* --- Badges --- */
+        .badge {
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 10px !important;
+        }
+        .badge-pending { background: rgba(100, 116, 139, 0.15); color: #475569; }
+        .badge-pregnant { background: rgba(5, 150, 105, 0.15); color: var(--color-pregnant); }
+        .badge-khali { background: rgba(220, 38, 38, 0.15); color: var(--color-khali); }
+        .badge-treatment { background: rgba(139, 92, 246, 0.15); color: var(--color-treatment); }
+
+        .btn-delete-row {
+            border: none;
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--color-khali);
+            padding: 4px 8px;
+            font-weight: 800;
+            border-radius: 6px;
+            font-size: 10px;
+        }
+
+        /* --- Doctor Page Layout --- */
+        #doctorPage { display: none; }
+
+        .shed-btn {
+            width: 100%;
+            min-height: 46px;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.6);
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .active-shed {
+            background: var(--accent-dark);
+            color: white;
+            border-color: var(--accent-dark);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* --- Doctor Diagnostic Cards --- */
+        .doctor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .doctor-box {
+            background: rgba(255,255,255,0.7);
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 15px var(--glass-shadow);
+            border-left: 5px solid #64748b;
+        }
+
+        .pending-card { border-left-color: var(--color-fali); }
+        .pregnant-card { border-left-color: var(--color-pregnant); }
+        .khali-card { border-left-color: var(--color-khali); }
+        .repeat-card { border-left-color: var(--color-repeat); }
+
+        .doctor-box h6 {
+            font-size: 14px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .doctor-box p {
+            font-size: 12px;
+            margin-bottom: 4px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .action-btn {
+            border: 1px solid transparent;
+            padding: 6px 12px;
+            font-size: 11px;
+            border-radius: 8px;
+            margin-top: 8px;
+            margin-right: 4px;
+            font-weight: 800;
+            transition: all 0.2s;
+        }
+
+        .btn-act-preg { background: rgba(5, 150, 105, 0.12); color: var(--color-pregnant); }
+        .btn-act-khali { background: rgba(220, 38, 38, 0.12); color: var(--color-khali); }
+        .btn-act-hist { background: rgba(15, 23, 42, 0.08); color: var(--text-primary); }
+        .btn-act-notes { background: rgba(139, 92, 246, 0.12); color: var(--color-treatment); }
+
+        /* --- Custom Details Popup Sheet Modal --- */
+        .detail-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+        .detail-modal-content {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 20px;
+            animation: popIn 0.2s ease-out;
+        }
+        @keyframes popIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-list-item {
+            background: rgba(255,255,255,0.6);
+            border: 1px solid rgba(0,0,0,0.05);
+            padding: 10px 14px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .modal-close-btn {
+            background: var(--accent-dark);
+            color: white;
+            border: none;
+            font-weight: 800;
+            font-size: 12px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 14px;
+        }
+
+        @media(max-width:600px){
+            .doctor-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="mainPage" class="container-fluid p-0" style="max-width: 650px; margin: 0 auto;">
+
+    <div class="header">
+        <h1>🐃 FALI BOOK PRO</h1>
+        <p>Automatic Dairy Monitoring ERP</p>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="metric-card blue" onclick="showDashboardDetails('total')">
+            <div class="metric-title">TOTAL FALI RECORDS</div>
+            <div class="metric-value" id="totalFali">0</div>
+        </div>
+        <div class="metric-card green" onclick="showDashboardDetails('toBeTested')">
+            <div class="metric-title">TO BE TESTED (55+ DAYS)</div>
+            <div class="metric-value" id="toBeTested">0</div>
+        </div>
+        <div class="metric-card red" onclick="showDashboardDetails('khali')">
+            <div class="metric-title">KHALI CASES</div>
+            <div class="metric-value" id="khaliCases">0</div>
+        </div>
+        <div class="metric-card orange" onclick="showDashboardDetails('repeat')">
+            <div class="metric-title">REPEAT CASES (4+)</div>
+            <div class="metric-value" id="repeatCases">0</div>
+        </div>
+    </div>
+
+    <div class="card-box">
+        <div class="section-title">📊 Shed Wise Analytics</div>
+        <div class="dashboard-grid">
+            <div class="metric-card purple" onclick="showDashboardDetails('shedACount')">
+                <div class="metric-title">SHED A COUNT</div>
+                <div class="metric-value" id="shedAcount">0</div>
+            </div>
+            <div class="metric-card blue" onclick="showDashboardDetails('shedBCount')">
+                <div class="metric-title">SHED B COUNT</div>
+                <div class="metric-value" id="shedBcount">0</div>
+            </div>
+            <div class="metric-card green" onclick="showDashboardDetails('shedATest')">
+                <div class="metric-title">SHED A PENDING TEST</div>
+                <div class="metric-value" id="shedAtest">0</div>
+            </div>
+            <div class="metric-card orange" onclick="showDashboardDetails('shedBTest')">
+                <div class="metric-title">SHED B PENDING TEST</div>
+                <div class="metric-value" id="shedBtest">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-box">
+        <div class="section-title">📅 Monthly Summary Matrix</div>
+        <div class="month-grid" id="monthGrid"></div>
+    </div>
+
+    <button class="dashboard-btn" onclick="openDoctorPage()">
+        🩺 OPEN VETERINARY DOCTOR DASHBOARD
+    </button>
+
+    <div class="card-box">
+        <div class="section-title">➕ Add Fali Entry</div>
+        <div class="row g-2">
+            <div class="col-6">
+                <label>Tag Number</label>
+                <input type="text" id="tagNo" class="form-control" placeholder="e.g. 2405">
+            </div>
+            <div class="col-6">
+                <label>Khila Number</label>
+                <input type="number" id="khilaNo" class="form-control" placeholder="e.g. 12">
+            </div>
+            <div class="col-6">
+                <label>Shed Group</label>
+                <select id="shed" class="form-select">
+                    <option>Shed A</option>
+                    <option>Shed B</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <label>Bull Type</label>
+                <select id="bullType" class="form-select">
+                    <option>82</option>
+                    <option>Bhura</option>
+                    <option>66</option>
+                    <option>17</option>
+                    <option>Jafra</option>
+                    <option>Dhoni</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <label>Fali Date</label>
+                <input type="date" id="faliDate" class="form-control">
+            </div>
+            <div class="col-6">
+                <label>Status State</label>
+                <select id="status" class="form-select">
+                    <option>Pending</option>
+                    <option>Pregnant</option>
+                    <option>Khali</option>
+                    <option>Treatment</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <label>Repeat Count</label>
+                <input type="number" id="repeatCount" value="0" class="form-control" min="0">
+            </div>
+            <div class="col-6">
+                <label>Doctor Checkup Visit</label>
+                <input type="date" id="doctorVisit" class="form-control">
+            </div>
+            <div class="col-12">
+                <label>Clinical Notes / Treatments</label>
+                <textarea id="treatment" class="form-control" placeholder="Enter medication updates or diagnostic details..."></textarea>
+            </div>
+            <div class="col-12 mt-3">
+                <button class="btn-save" onclick="saveRecord()">SAVE HERD RECORD</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-box table-card">
+        <div class="section-title">📋 Comprehensive Registry Logs</div>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Tag</th>
+                        <th>Khila</th>
+                        <th>Shed</th>
+                        <th>Status</th>
+                        <th>Days</th>
+                        <th>Repeat</th>
+                        <th style="text-align: right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="recordTable"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="doctorPage" class="container-fluid p-0" style="max-width: 650px; margin: 0 auto;">
+    <div class="card-box">
+        <button class="dashboard-btn mb-3" style="background:#475569;" onclick="closeDoctorPage()">
+            ⬅ RETURN TO MAIN ERP PANEL
+        </button>
+        
+        <div class="section-title">Subpage View - Doctor Dashboard</div>
+        
+        <div class="row g-2 mb-3">
+            <div class="col-6">
+                <button class="shed-btn active-shed" id="shedABtn" onclick="changeDoctorShed('Shed A')">🐃 Shed A Queue</button>
+            </div>
+            <div class="col-6">
+                <button class="shed-btn" id="shedBBtn" onclick="changeDoctorShed('Shed B')">🐃 Shed B Queue</button>
+            </div>
+        </div>
+
+        <div class="section-title text-primary font-weight-bold">🧪 ANIMALS PENDING PREGNANCY DIAGNOSIS (55+ Days)</div>
+        <div class="doctor-grid mb-4" id="doctorGrid"></div>
+
+        <div class="section-title text-success font-weight-bold">✅ CONFIRMED PREGNANT INDIVIDUALS</div>
+        <div class="doctor-grid mb-4" id="pregnantGrid"></div>
+
+        <div class="section-title text-danger font-weight-bold">❌ KHALI NON-CONCEIVED RECORDS</div>
+        <div class="doctor-grid mb-4" id="khaliGrid"></div>
+
+        <div class="section-title text-warning font-weight-bold">🚨 HIGH RISK REPEAT BREEDERS (4+ Cycles)</div>
+        <div class="doctor-grid" id="repeatGrid"></div>
+    </div>
+</div>
+
+<div id="detailsModal" class="detail-modal" onclick="closeDetailsModal(event)">
+    <div class="detail-modal-content" onclick="event.stopPropagation()">
+        <h5 id="modalTitle" class="section-title" style="border-bottom: 2px solid rgba(0,0,0,0.08); padding-bottom: 10px;">Box Details</h5>
+        <div id="modalBody" style="max-height: 50vh; overflow-y: auto;">
+            </div>
+        <button class="modal-close-btn" onclick="document.getElementById('detailsModal').style.display='none'">CLOSE PREVIEW</button>
+    </div>
+</div>
+
+<script>
+    /* LOCALSTORAGE DATABASE MANAGEMENT */
+    let records = JSON.parse(localStorage.getItem("faliBook")) || [];
+    const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+    let activeDoctorShed = "Shed A";
+
+    // Standardize input fields configuration safely on screen mount
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("faliDate").value = new Date().toISOString().split('T')[0];
+        renderData();
+    });
+
+    function saveRecord() {
+        const tagInput = document.getElementById("tagNo").value;
+        if (!tagInput) { alert("Please provide a valid Tag number"); return; }
+
+        let record = {
+            id: Date.now(),
+            tagNo: tagInput,
+            khilaNo: document.getElementById("khilaNo").value || '-',
+            shed: document.getElementById("shed").value,
+            bullType: document.getElementById("bullType").value,
+            faliDate: document.getElementById("faliDate").value,
+            status: document.getElementById("status").value,
+            repeatCount: parseInt(document.getElementById("repeatCount").value) || 0,
+            doctorVisit: document.getElementById("doctorVisit").value,
+            treatment: document.getElementById("treatment").value
+        };
+
+        records.push(record);
+        localStorage.setItem("faliBook", JSON.stringify(records));
+        
+        // Safely clear input target spaces
+        document.getElementById("tagNo").value = "";
+        document.getElementById("khilaNo").value = "";
+        document.getElementById("treatment").value = "";
+        document.getElementById("repeatCount").value = "0";
+        document.getElementById("doctorVisit").value = "";
+        
+        renderData();
+        alert("✅ Record Saved Successfully");
+    }
+
+    function getDays(date) {
+        if (!date) return 0;
+        let diff = new Date() - new Date(date);
+        return Math.floor(diff / (1000 * 60 * 60 * 24));
+    }
+
+    function openDoctorPage() {
+        document.getElementById("mainPage").style.display = "none";
+        document.getElementById("doctorPage").style.display = "block";
+        window.scrollTo(0,0);
+    }
+
+    function closeDoctorPage() {
+        document.getElementById("mainPage").style.display = "block";
+        document.getElementById("doctorPage").style.display = "none";
+    }
+
+    function changeDoctorShed(shed) {
+        activeDoctorShed = shed;
+        document.getElementById("shedABtn").classList.remove("active-shed");
+        document.getElementById("shedBBtn").classList.remove("active-shed");
+
+        if (shed === "Shed A") {
+            document.getElementById("shedABtn").classList.add("active-shed");
+        } else {
+            document.getElementById("shedBBtn").classList.add("active-shed");
+        }
+        renderData();
+    }
+
+    function updateStatus(id, status) {
+        let index = records.findIndex(r => r.id === id);
+        if (index === -1) return;
+        records[index].status = status;
+        localStorage.setItem("faliBook", JSON.stringify(records));
+        renderData();
+    }
+
+    function deleteRecord(id) {
+        if(confirm("Are you sure you want to delete this history log permanently?")) {
+            records = records.filter(r => r.id !== id);
+            localStorage.setItem("faliBook", JSON.stringify(records));
+            renderData();
+        }
+    }
+
+    function showHistory(tag) {
+        let history = records.filter(r => r.tagNo == tag);
+        let text = `--- Breeding Log History for Tag #${tag} ---\n\n`;
+        history.forEach((r, idx) => {
+            text += `${idx + 1}) Date: ${r.faliDate} | Status: ${r.status} | Bull: ${r.bullType} | Repeats: ${r.repeatCount}\n`;
+            if(r.treatment) text += `   Treatment Notes: ${r.treatment}\n`;
+            if(r.doctorVisit) text += `   Doctor Visit: ${r.doctorVisit}\n`;
+            text += `------------------------------------------------------\n`;
+        });
+        alert(text);
+    }
+
+    function viewTreatmentNotes(notes) {
+        alert(notes ? `Clinical Treatment Notes:\n\n${notes}` : "No specific treatment notes logged for this entry.");
+    }
+
+    /* POPUP DETAILS CONTROLLER ENGINE */
+    function showDashboardDetails(type, extraParam = null) {
+        let filteredList = [];
+        let titleText = "";
+
+        if (type === 'total') {
+            titleText = "📋 Total Fali Records";
+            filteredList = records;
+        } else if (type === 'toBeTested') {
+            titleText = "🧪 To Be Tested (55+ Days)";
+            filteredList = records.filter(r => getDays(r.faliDate) >= 55 && r.status === "Pending");
+        } else if (type === 'khali') {
+            titleText = "❌ Khali Cases";
+            filteredList = records.filter(r => r.status === "Khali");
+        } else if (type === 'repeat') {
+            titleText = "🚨 High Risk Repeaters (4+)";
+            filteredList = records.filter(r => r.repeatCount >= 4);
+        } else if (type === 'shedACount') {
+            titleText = "🏠 Shed A Animals";
+            filteredList = records.filter(r => r.shed === "Shed A");
+        } else if (type === 'shedBCount') {
+            titleText = "🏠 Shed B Animals";
+            filteredList = records.filter(r => r.shed === "Shed B");
+        } else if (type === 'shedATest') {
+            titleText = "🧪 Shed A Pending Diagnostics";
+            filteredList = records.filter(r => r.shed === "Shed A" && getDays(r.faliDate) >= 55 && r.status === "Pending");
+        } else if (type === 'shedBTest') {
+            titleText = "🧪 Shed B Pending Diagnostics";
+            filteredList = records.filter(r => r.shed === "Shed B" && getDays(r.faliDate) >= 55 && r.status === "Pending");
+        } else if (type === 'month') {
+            titleText = `📅 Matrix Logs - ${months[extraParam]}`;
+            filteredList = records.filter(r => {
+                if (!r.faliDate) return false;
+                return new Date(r.faliDate).getMonth() === extraParam;
+            });
+        }
+
+        const modalBody = document.getElementById("modalBody");
+        document.getElementById("modalTitle").innerText = titleText;
+        modalBody.innerHTML = "";
+
+        if (filteredList.length === 0) {
+            modalBody.innerHTML = `<p style="text-align:center; color: var(--text-secondary); font-size:13px; padding:10px;">No current animal items match this category setup.</p>`;
+        } else {
+            filteredList.forEach(r => {
+                let badgeStyle = "background: rgba(15,23,42,0.08); color: var(--text-primary);";
+                if (r.status === 'Pregnant') badgeStyle = "background: rgba(5, 150, 105, 0.15); color: var(--color-pregnant);";
+                if (r.status === 'Khali') badgeStyle = "background: rgba(220, 38, 38, 0.15); color: var(--color-khali);";
+                if (r.status === 'Treatment') badgeStyle = "background: rgba(139, 92, 246, 0.15); color: var(--color-treatment);";
+                
+                modalBody.innerHTML += `
+                    <div class="modal-list-item">
+                        <div>
+                            <span style="font-weight:900; color:var(--accent-dark);">Tag: #${r.tagNo}</span> 
+                            <span style="font-size:11px; color:var(--text-secondary); margin-left:8px;">(Khila: ${r.khilaNo})</span>
+                            <div style="font-size:11px; color:var(--text-secondary); font-weight:500;">${r.shed} | ${getDays(r.faliDate)} Days Passed</div>
+                        </div>
+                        <span class="badge" style="${badgeStyle}">${r.status}</span>
+                    </div>
+                `;
+            });
+        }
+        document.getElementById("detailsModal").style.display = "flex";
+    }
+
+    function closeDetailsModal(e) {
+        if(e.target === document.getElementById("detailsModal")) {
+            document.getElementById("detailsModal").style.display = "none";
+        }
+    }
+
+    function createCard(r, type) {
+        return `
+            <div class="doctor-box ${type}-card">
+                <h6>Tag Number: #${r.tagNo}</h6>
+                <p>Khila Location: ${r.khilaNo}</p>
+                <p>Days Passed: <strong>${getDays(r.faliDate)} days</strong></p>
+                <p>Current Status: ${r.status}</p>
+                <p>Bull Type: ${r.bullType}</p>
+                <p>Repeat Counts: ${r.repeatCount}</p>
+                <div class="d-flex flex-wrap mt-2">
+                    <button class="action-btn btn-act-preg" onclick="updateStatus(${r.id},'Pregnant')">✓ Pregnant</button>
+                    <button class="action-btn btn-act-khali" onclick="updateStatus(${r.id},'Khali')">✕ Khali</button>
+                    <button class="action-btn btn-act-notes" onclick="viewTreatmentNotes(\`${r.treatment ? r.treatment.replace(/'/g, "\\'") : ''}\`)">🩺 Notes</button>
+                    <button class="action-btn btn-act-hist" onclick="showHistory('${r.tagNo}')">📋 History</button>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderData() {
+        document.getElementById("totalFali").innerText = records.length;
+
+        let testing = records.filter(r => getDays(r.faliDate) >= 55 && r.status === "Pending");
+        document.getElementById("toBeTested").innerText = testing.length;
+        document.getElementById("khaliCases").innerText = records.filter(r => r.status === "Khali").length;
+        document.getElementById("repeatCases").innerText = records.filter(r => r.repeatCount >= 4).length;
+
+        /* SHED PARSING ANALYSIS METRICS */
+        let shedA = records.filter(r => r.shed === "Shed A");
+        let shedB = records.filter(r => r.shed === "Shed B");
+
+        document.getElementById("shedAcount").innerText = shedA.length;
+        document.getElementById("shedBcount").innerText = shedB.length;
+        document.getElementById("shedAtest").innerText = shedA.filter(r => getDays(r.faliDate) >= 55 && r.status === "Pending").length;
+        document.getElementById("shedBtest").innerText = shedB.filter(r => getDays(r.faliDate) >= 55 && r.status === "Pending").length;
+
+        /* RENDER MATRIX GRID */
+        let monthHTML = "";
+        months.forEach((m, index) => {
+            let count = records.filter(r => {
+                if (!r.faliDate) return false;
+                return new Date(r.faliDate).getMonth() === index;
+            }).length;
+
+            monthHTML += `
+                <div class="month-box" onclick="showDashboardDetails('month', ${index})">
+                    <div class="month-name">${m}</div>
+                    <div class="month-count">${count}</div>
+                </div>
+            `;
+        });
+        document.getElementById("monthGrid").innerHTML = monthHTML;
+
+        /* BASELINE TABLE RECONCILIATION */
+        let tableHTML = "";
+        let reversedRecords = [...records].reverse();
+        reversedRecords.forEach(r => {
+            let badge = "badge-pending";
+            if (r.status === "Pregnant") badge = "badge-pregnant";
+            if (r.status === "Khali") badge = "badge-khali";
+            if (r.status === "Treatment") badge = "badge-treatment";
+
+            tableHTML += `
+                <tr>
+                    <td><strong>#${r.tagNo}</strong></td>
+                    <td><span class="badge bg-light text-dark border">${r.khilaNo}</span></td>
+                    <td>${r.shed}</td>
+                    <td><span class="badge ${badge}">${r.status}</span></td>
+                    <td><strong>${getDays(r.faliDate)}</strong></td>
+                    <td>${r.repeatCount}</td>
+                    <td style="text-align: right;">
+                        <button class="btn-delete-row" onclick="deleteRecord(${r.id})">Remove</button>
+                    </td>
+                </tr>
+            `;
+        });
+        document.getElementById("recordTable").innerHTML = tableHTML || `<tr><td colspan="7" style="text-align:center; padding:20px; color:var(--text-secondary);">No historical records found.</td></tr>`;
+
+        /* DOCTOR PORTAL RENDERING */
+        let shedRecords = records.filter(r => r.shed === activeDoctorShed);
+
+        // Sorting Ascending by Khila Target Key
+        let testingHTML = "";
+        shedRecords
+            .filter(r => getDays(r.faliDate) >= 55 && r.status === "Pending")
+            .sort((a, b) => Number(a.khilaNo || 0) - Number(b.khilaNo || 0))
+            .forEach(r => { testingHTML += createCard(r, "pending"); });
+        document.getElementById("doctorGrid").innerHTML = testingHTML || "<p style='padding:10px; color:var(--text-secondary); font-weight:600;'>No animals require pregnancy diagnosis.</p>";
+
+        let pregnantHTML = "";
+        shedRecords.filter(r => r.status === "Pregnant").forEach(r => { pregnantHTML += createCard(r, "pregnant"); });
+        document.getElementById("pregnantGrid").innerHTML = pregnantHTML || "<p style='padding:10px; color:var(--text-secondary); font-weight:600;'>No confirmed pregnant animals found.</p>";
+
+        let khaliHTML = "";
+        shedRecords.filter(r => r.status === "Khali").forEach(r => { khaliHTML += createCard(r, "khali"); });
+        document.getElementById("khaliGrid").innerHTML = khaliHTML || "<p style='padding:10px; color:var(--text-secondary); font-weight:600;'>No non-conceived cases logged.</p>";
+
+        let repeatHTML = "";
+        shedRecords.filter(r => r.repeatCount >= 4).forEach(r => { repeatHTML += createCard(r, "repeat"); });
+        document.getElementById("repeatGrid").innerHTML = repeatHTML || "<p style='padding:10px; color:var(--text-secondary); font-weight:600;'>No active high-risk breeding repeaters.</p>";
+    }
+</script>
+
+</body>
+</html>
