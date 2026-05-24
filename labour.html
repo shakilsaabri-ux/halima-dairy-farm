@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HALIMA DAIRY FARM - Labour Book & Debt Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --glass-card: rgba(30, 30, 30, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: rgba(0, 0, 0, 0.5);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-gold: #e2b857;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            padding: 14px;
+            min-height: 100vh;
+        }
+
+        .header-inline {
+            background: var(--glass-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 16px 20px;
+            border-radius: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-inline h1 {
+            font-size: 1.25rem;
+            font-weight: 900;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .header-inline .date-calendar {
+            background: rgba(226, 184, 87, 0.15);
+            color: var(--accent-gold);
+            font-size: 12px;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 12px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .metric-card {
+            background: var(--glass-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 4px 20px var(--glass-shadow);
+            border-left: 4px solid var(--accent-gold);
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        .metric-card:active { transform: scale(0.97); }
+        .metric-card.green-bar { border-left-color: var(--accent-green); }
+        .metric-card.blue-bar { border-left-color: var(--accent-blue); }
+        .metric-card.purple-bar { border-left-color: #a855f7; }
+
+        .metric-title {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .metric-value {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--text-primary);
+        }
+
+        .card-box {
+            background: var(--glass-card);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--glass-border);
+            padding: 18px;
+            border-radius: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 8px;
+        }
+
+        label {
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .form-control, .form-select {
+            min-height: 44px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(20, 20, 20, 0.6);
+            color: var(--text-primary);
+        }
+
+        .btn-primary-gold {
+            width: 100%;
+            min-height: 46px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #e2b857 0%, #b88e2f 100%);
+            color: #121212;
+            font-weight: 800;
+            font-size: 13px;
+        }
+        .btn-primary-gold:active { transform: scale(0.98); }
+
+        .attendance-btn {
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            color: var(--text-primary);
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 6px;
+            min-width: 65px;
+        }
+        .attendance-btn.present { background: rgba(16, 185, 129, 0.2); border-color: var(--accent-green); color: #34d399; }
+        .attendance-btn.absent { background: rgba(239, 68, 68, 0.2); border-color: var(--accent-red); color: #f87171; }
+
+        .btn-archive {
+            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .table-responsive {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .table th {
+            font-size: 11px;
+            padding: 12px 8px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            background: #1e1e1e;
+        }
+        .table td {
+            font-size: 12px;
+            padding: 10px 8px;
+            color: var(--text-primary);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .tab-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-secondary);
+            font-weight: 700;
+            font-size: 12px;
+            padding: 8px 16px;
+            border-radius: 10px;
+        }
+        .tab-btn.active { background: var(--accent-gold); color: #121212; border-color: var(--accent-gold); }
+
+        .detail-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+        .detail-modal-content {
+            background: #1e1e1e;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            max-width: 550px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .modal-list-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 10px 14px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+        .alert-danger-debt {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px dashed var(--accent-red);
+            color: #f87171;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid p-0" style="max-width: 650px; margin: 0 auto;">
+
+    <div class="header-inline">
+        <h1>HALIMA DAIRY FARM</h1>
+        <div class="date-calendar">23 May 2026</div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="metric-card" onclick="showDashboardDetails('totalLabour')">
+            <div class="metric-title">Monthly Labour Amount 👆</div>
+            <div class="metric-value">Rs <span id="dashTotalLabour">0</span></div>
+        </div>
+        <div class="metric-card blue-bar" onclick="showDashboardDetails('animalCost')">
+            <div class="metric-title">Labour Pagar (Per Animal Cost) 👆</div>
+            <div class="metric-value">Rs <span id="dashPerAnimalCost">0.00</span></div>
+        </div>
+        <div class="metric-card purple-bar" onclick="showDashboardDetails('shedADoubling')">
+            <div class="metric-title">Shed A Doubling Pool 👆</div>
+            <div class="metric-value">Rs <span id="dashShedADoubling">0</span></div>
+        </div>
+        <div class="metric-card purple-bar" onclick="showDashboardDetails('shedBDoubling')">
+            <div class="metric-title">Shed B Doubling Pool 👆</div>
+            <div class="metric-value">Rs <span id="dashShedBDoubling">0</span></div>
+        </div>
+        <div class="metric-card green-bar" onclick="showDashboardDetails('advances')">
+            <div class="metric-title">Total Advance Salary Paid 👆</div>
+            <div class="metric-value">Rs <span id="dashTotalAdvance">0</span></div>
+        </div>
+        <div class="metric-card text-danger" onclick="showDashboardDetails('outstanding')">
+            <div class="metric-title">Net Net Outstanding Balance 👆</div>
+            <div class="metric-value">Rs <span id="dashNetOutstanding">0</span></div>
+        </div>
+    </div>
+
+    <div class="card-box" style="border: 1px solid var(--accent-gold); background: rgba(226, 184, 87, 0.04);">
+        <div class="section-title text-warning">🔍 Find Returning Labour History (1+ Year Ago Lookup)</div>
+        <input type="text" id="archiveSearchInput" class="form-control" placeholder="Search returning worker by name..." oninput="searchHistoricalArchive()">
+        <div id="archiveSearchResults" class="mt-3" style="display:none; max-height: 250px; overflow-y:auto;"></div>
+    </div>
+
+    <div class="card-box">
+        <div class="section-title">💸 Advance Payment & Cash Recovery Book</div>
+        <div class="alert-danger-debt">
+            ⚠️ Logic Rule: If an absent worker has an advance, their net balance becomes negative. Use "Direct Cash Recovery" if they pay you back in cash.
+        </div>
+        <div class="row g-2">
+            <div class="col-12">
+                <label>Select Worker</label>
+                <select id="selectWorker" class="form-select"></select>
+            </div>
+            <div class="col-6">
+                <label>Amount (Rs)</label>
+                <input type="number" id="inputAdvance" class="form-control" placeholder="e.g. 2000">
+            </div>
+            <div class="col-6">
+                <label>Transaction Type</label>
+                <select id="transactionType" class="form-select">
+                    <option value="give">Give Advance (Adds to Debt)</option>
+                    <option value="recover">Direct Cash Recovery (Settles Debt)</option>
+                </select>
+            </div>
+            <div class="col-12 mt-2">
+                <button class="btn-primary-gold" onclick="applyAdvanceTransaction()">LOG TRANSACTION & CALC PAYROLL</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-box">
+        <div class="section-title">⚙️ Configure Worker Base Wages (Pagar)</div>
+        <div class="row g-2">
+            <div class="col-6">
+                <label>Select Worker Profile</label>
+                <select id="selectWageWorker" class="form-select" onchange="loadWorkerWageDefault()"></select>
+            </div>
+            <div class="col-6">
+                <label>Set Custom Base Wage (Rs/mo)</label>
+                <input type="number" id="inputCustomWage" class="form-control">
+            </div>
+            <div class="col-12 mt-2">
+                <button class="btn-primary-gold" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white;" onclick="updateWorkerWage()">UPDATE BASE PAGAR RATE</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2 mb-3">
+        <button id="btnTabShedA" class="tab-btn active" onclick="switchShedTab('A')">SHED A ROSTER</button>
+        <button id="btnTabShedB" class="tab-btn" onclick="switchShedTab('B')">SHED B ROSTER</button>
+        <button id="btnTabCook" class="tab-btn" onclick="switchShedTab('Cook')">SHARED SERVICES</button>
+    </div>
+
+    <div class="card-box">
+        <div class="section-title d-flex justify-content-between align-items-center">
+            <span>📋 Staff Register & Attendance Sheet</span>
+            <span style="font-size:11px; color: var(--accent-gold);">Doubling: Rs 15,000/mo</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-dark align-middle">
+                <thead>
+                    <tr>
+                        <th>Worker Name</th>
+                        <th>Role</th>
+                        <th>Base Wage</th>
+                        <th>AM</th>
+                        <th>PM</th>
+                        <th>Doubling</th>
+                        <th>Advance</th>
+                        <th>Net Balance</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="labourTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div id="dashboardModal" class="detail-modal" onclick="closeDashboardModal(event)">
+    <div class="detail-modal-content" onclick="event.stopPropagation()">
+        <h5 id="modalTitle" class="section-title">📊 Detail View Sheet</h5>
+        <div id="modalBody" style="max-height: 50vh; overflow-y: auto;"></div>
+        <button class="modal-close-btn btn btn-secondary w-100 mt-3" onclick="document.getElementById('dashboardModal').style.display='none'">CLOSE DETAILS</button>
+    </div>
+</div>
+
+<script>
+    const TOTAL_ANIMALS_MUMBAI = 192; 
+    const DOUBLING_POOL_RATE = 15000;
+    let currentShedFilter = "A";
+
+    let defaultStaff = [
+        { id: 1, name: "Arif Khan", role: "Duhela", shed: "A", baseWage: 14000, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 2, name: "Salman S.", role: "Duhela", shed: "A", baseWage: 13500, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 3, name: "Ramzan Ali", role: "Duhela", shed: "A", baseWage: 14200, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 4, name: "Irfan Pathan", role: "Duhela", shed: "A", baseWage: 14000, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 5, name: "Sajid Shaikh", role: "Duhela", shed: "A", baseWage: 14500, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 6, name: "Zubair Ahmed", role: "Duhela", shed: "A", baseWage: 13800, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 7, name: "Kareem Das", role: "Chinkadiya", shed: "A", baseWage: 11000, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 8, name: "Dinesh Kumar", role: "Chinkadiya", shed: "A", baseWage: 10800, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 9, name: "Suresh Yadav", role: "Chinkadiya", shed: "A", baseWage: 11500, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 10, name: "Raju Prasad", role: "Chinkadiya", shed: "A", baseWage: 11200, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 11, name: "Mehta Anwar", role: "Manager", shed: "A", baseWage: 22000, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 12, name: "Mustafa Raj", role: "Duhela", shed: "B", baseWage: 14500, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 13, name: "Yaseen Malik", role: "Duhela", shed: "B", baseWage: 14000, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 14, name: "Farooq Shah", role: "Duhela", shed: "B", baseWage: 14800, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 15, name: "Nadeem Khan", role: "Duhela", shed: "B", baseWage: 14200, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 16, name: "Asif Ansari", role: "Duhela", shed: "B", baseWage: 13900, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 17, name: "Haroon Rashid", role: "Duhela", shed: "B", baseWage: 14600, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 18, name: "Vikram Singh", role: "Chinkadiya", shed: "B", baseWage: 11200, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 19, name: "Anil Kevat", role: "Chinkadiya", shed: "B", baseWage: 11000, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 20, name: "Mukesh Sahni", role: "Chinkadiya", shed: "B", baseWage: 11400, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 21, name: "Pappu Pal", role: "Chinkadiya", shed: "B", baseWage: 10900, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 22, name: "Mehta Rashid", role: "Manager", shed: "B", baseWage: 23000, am: true, pm: true, advance: 0, doublingBonus: 0 },
+        { id: 23, name: "Chotu Maharaj", role: "Cook", shed: "Shared", baseWage: 9500, am: true, pm: true, advance: 0, doublingBonus: 0 }
+    ];
+
+    let staff = JSON.parse(localStorage.getItem("dairyLabourRegister")) || defaultStaff;
+    let historicalArchive = JSON.parse(localStorage.getItem("dairyLabourArchive")) || [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        calculatePayrollEngine();
+        populateWorkerDropdowns();
+    });
+
+    function switchShedTab(targetShed) {
+        currentShedFilter = targetShed;
+        document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+        if (targetShed === 'A') document.getElementById("btnTabShedA").classList.add("active");
+        if (targetShed === 'B') document.getElementById("btnTabShedB").classList.add("active");
+        if (targetShed === 'Cook') document.getElementById("btnTabCook").classList.add("active");
+        renderLabourRosterTable();
+    }
+
+    function populateWorkerDropdowns() {
+        let selectAdv = document.getElementById("selectWorker");
+        let selectWage = document.getElementById("selectWageWorker");
+        selectAdv.innerHTML = ""; selectWage.innerHTML = "";
+
+        staff.forEach(worker => {
+            let itemText = `${worker.name} (${worker.role} - Shed ${worker.shed})`;
+            let optA = document.createElement("option"); optA.value = worker.id; optA.innerText = itemText; selectAdv.appendChild(optA);
+            let optW = document.createElement("option"); optW.value = worker.id; optW.innerText = itemText; selectWage.appendChild(optW);
+        });
+        loadWorkerWageDefault();
+    }
+
+    function loadWorkerWageDefault() {
+        let targetId = parseInt(document.getElementById("selectWageWorker").value);
+        let worker = staff.find(w => w.id === targetId);
+        if(worker) document.getElementById("inputCustomWage").value = worker.baseWage;
+    }
+
+    function updateWorkerWage() {
+        let targetId = parseInt(document.getElementById("selectWageWorker").value);
+        let newWage = parseFloat(document.getElementById("inputCustomWage").value) || 0;
+        if(newWage <= 0) return alert("❌ Check base monthly wage input.");
+        let worker = staff.find(w => w.id === targetId);
+        if(worker) { worker.baseWage = newWage; calculatePayrollEngine(); alert(`⚙️ Wage rate updated.`); }
+    }
+
+    function calculatePayrollEngine() {
+        let absentDuhelasShedA = 0, activeDuhelasShedA = 0;
+        let absentChinkadiyasShedA = 0, activeChinkadiyasShedA = 0;
+        let absentDuhelasShedB = 0, activeDuhelasShedB = 0;
+        let absentChinkadiyasShedB = 0, activeChinkadiyasShedB = 0;
+
+        staff.forEach(w => {
+            let isPresent = (w.am && w.pm);
+            if (w.shed === "A") {
+                if (w.role === "Duhela") { if (!isPresent) absentDuhelasShedA++; else activeDuhelasShedA++; }
+                else if (w.role === "Chinkadiya") { if (!isPresent) absentChinkadiyasShedA++; else activeChinkadiyasShedA++; }
+            } else if (w.shed === "B") {
+                if (w.role === "Duhela") { if (!isPresent) absentDuhelasShedB++; else activeDuhelasShedB++; }
+                else if (w.role === "Chinkadiya") { if (!isPresent) absentChinkadiyasShedB++; else activeChinkadiyasShedB++; }
+            }
+        });
+
+        staff.forEach(w => {
+            w.doublingBonus = 0;
+            let isPresent = (w.am && w.pm);
+            if (isPresent) {
+                if (w.shed === "A") {
+                    if (w.role === "Duhela" && activeDuhelasShedA > 0) w.doublingBonus = (absentDuhelasShedA * DOUBLING_POOL_RATE) / activeDuhelasShedA;
+                    if (w.role === "Chinkadiya" && activeChinkadiyasShedA > 0) w.doublingBonus = (absentChinkadiyasShedA * DOUBLING_POOL_RATE) / activeChinkadiyasShedA;
+                } else if (w.shed === "B") {
+                    if (w.role === "Duhela" && activeDuhelasShedB > 0) w.doublingBonus = (absentDuhelasShedB * DOUBLING_POOL_RATE) / activeDuhelasShedB;
+                    if (w.role === "Chinkadiya" && activeChinkadiyasShedB > 0) w.doublingBonus = (absentChinkadiyasShedB * DOUBLING_POOL_RATE) / activeChinkadiyasShedB;
+                }
+            }
+        });
+
+        let totalLabourSpend = 0, totalAdvancePaid = 0, netOutstandingDue = 0;
+        staff.forEach(w => {
+            let currentBase = (w.am || w.pm) ? w.baseWage : 0;
+            totalLabourSpend += (currentBase + w.doublingBonus);
+            totalAdvancePaid += w.advance;
+            netOutstandingDue += (currentBase + w.doublingBonus - w.advance);
+        });
+
+        document.getElementById("dashShedADoubling").innerText = (absentDuhelasShedA + absentChinkadiyasShedA) * DOUBLING_POOL_RATE;
+        document.getElementById("dashShedBDoubling").innerText = (absentDuhelasShedB + absentChinkadiyasShedB) * DOUBLING_POOL_RATE;
+        document.getElementById("dashTotalLabour").innerText = totalLabourSpend;
+        document.getElementById("dashTotalAdvance").innerText = totalAdvancePaid;
+        document.getElementById("dashNetOutstanding").innerText = netOutstandingDue;
+        document.getElementById("dashPerAnimalCost").innerText = (totalLabourSpend / TOTAL_ANIMALS_MUMBAI).toFixed(2);
+
+        localStorage.setItem("dairyLabourRegister", JSON.stringify(staff));
+        renderLabourRosterTable();
+    }
+
+    function renderLabourRosterTable() {
+        let tbody = document.getElementById("labourTableBody"); tbody.innerHTML = "";
+        let filteredList = staff.filter(w => {
+            if (currentShedFilter === "A") return w.shed === "A";
+            if (currentShedFilter === "B") return w.shed === "B";
+            return w.shed === "Shared";
+        });
+
+        filteredList.forEach(w => {
+            let actualBase = (w.am || w.pm) ? w.baseWage : 0;
+            let netPayable = actualBase + w.doublingBonus - w.advance;
+            let isAbsentWithDebt = (!w.am && !w.pm && w.advance > 0);
+
+            let tr = document.createElement("tr");
+            if (isAbsentWithDebt) {
+                tr.style.background = "rgba(239, 68, 68, 0.15)";
+            }
+
+            tr.innerHTML = `
+                <td>
+                    <strong style="${isAbsentWithDebt ? 'color: var(--accent-red); font-weight:900;' : ''}">${w.name}</strong>
+                    ${isAbsentWithDebt ? '<br><span class="badge bg-danger" style="font-size:9px;">OWES FARM (ABSENT)</span>' : ''}
+                </td>
+                <td><span class="badge bg-secondary">${w.role}</span></td>
+                <td>Rs ${w.baseWage}</td>
+                <td><button class="attendance-btn ${w.am ? 'present' : 'absent'}" onclick="toggleAttendance(${w.id}, 'am')">${w.am ? 'Present' : 'Absent'}</button></td>
+                <td><button class="attendance-btn ${w.pm ? 'present' : 'absent'}" onclick="toggleAttendance(${w.id}, 'pm')">${w.pm ? 'Present' : 'Absent'}</button></td>
+                <td class="text-warning">+Rs ${Math.round(w.doublingBonus)}</td>
+                <td class="text-danger" style="font-weight:700;">Rs ${w.advance}</td>
+                <td class="${netPayable >= 0 ? 'text-success' : 'text-danger'}" style="font-weight:900;">
+                    Rs ${Math.round(netPayable)}
+                </td>
+                <td><button class="btn-archive" onclick="archiveWorkerFromRoster(${w.id})">Archive</button></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function toggleAttendance(id, session) {
+        let worker = staff.find(w => w.id === id);
+        if (worker) {
+            if (session === 'am') worker.am = !worker.am;
+            if (session === 'pm') worker.pm = !worker.pm;
+            calculatePayrollEngine();
+        }
+    }
+
+    function applyAdvanceTransaction() {
+        let targetId = parseInt(document.getElementById("selectWorker").value);
+        let amount = parseFloat(document.getElementById("inputAdvance").value) || 0;
+        let type = document.getElementById("transactionType").value;
+
+        if (amount <= 0) return alert("❌ Please enter a valid amount.");
+        let worker = staff.find(w => w.id === targetId);
+        
+        if (worker) {
+            if (type === "give") {
+                worker.advance += amount;
+                alert(`✅ Advanced Rs ${amount} logged for ${worker.name}`);
+            } else if (type === "recover") {
+                if (amount > worker.advance) {
+                    alert(`❌ Cannot recover more than the actual advance (Current Advance: Rs ${worker.advance})`);
+                    return;
+                }
+                worker.advance -= amount;
+                alert(`✅ Recovered Rs ${amount} cash from ${worker.name}`);
+            }
+            document.getElementById("inputAdvance").value = "";
+            calculatePayrollEngine();
+        }
+    }
+
+    function archiveWorkerFromRoster(id) {
+        let worker = staff.find(w => w.id === id);
+        if (worker) {
+            // SECURITY CHECK: Guard against debt losses
+            if (worker.advance > 0) {
+                alert(`❌ BLOCKED: Cannot archive ${worker.name}. They have an active outstanding advance of Rs ${worker.advance}. Recover the cash balance or settle the ledger before archiving.`);
+                return;
+            }
+
+            if (confirm(`Archive ${worker.name} permanently into history?`)) {
+                let actualBase = (worker.am || worker.pm) ? worker.baseWage : 0;
+                let finalNet = actualBase + worker.doublingBonus - worker.advance;
+                
+                historicalArchive.push({
+                    name: worker.name, role: worker.role, shed: worker.shed,
+                    finalBaseWage: worker.baseWage, finalDoublingBonus: worker.doublingBonus,
+                    finalAdvanceCollected: worker.advance, netPayableSettlement: finalNet,
+                    archiveTimestamp: new Date().toLocaleDateString('en-GB')
+                });
+                localStorage.setItem("dairyLabourArchive", JSON.stringify(historicalArchive));
+
+                staff = staff.filter(w => w.id !== id);
+                calculatePayrollEngine();
+                populateWorkerDropdowns();
+            }
+        }
+    }
+
+    function searchHistoricalArchive() {
+        let searchVal = document.getElementById("archiveSearchInput").value.toLowerCase().trim();
+        let resultsDiv = document.getElementById("archiveSearchResults");
+        resultsDiv.innerHTML = "";
+
+        if (searchVal === "") { resultsDiv.style.display = "none"; return; }
+        let matched = historicalArchive.filter(h => h.name.toLowerCase().includes(searchVal));
+
+        if (matched.length === 0) {
+            resultsDiv.innerHTML = `<div class="p-2 text-center text-secondary" style="font-size:12px;">No old records found.</div>`;
+        } else {
+            matched.forEach(m => {
+                resultsDiv.innerHTML += `
+                    <div class="modal-list-item" style="border-left: 3px solid var(--accent-gold); background: #252525;">
+                        <div>
+                            <strong>${m.name}</strong> <span class="badge bg-secondary ms-1">${m.role}</span>
+                            <div style="font-size:10px; color:var(--text-secondary);">Archived: ${m.archiveTimestamp}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="text-success" style="font-weight:800;">Rs ${Math.round(m.netPayableSettlement)}</div>
+                        </div>
+                    </div>`;
+            });
+        }
+        resultsDiv.style.display = "block";
+    }
+
+    function showDashboardDetails(type) {
+        let title = document.getElementById("modalTitle");
+        let body = document.getElementById("modalBody");
+        body.innerHTML = "";
+
+        if (type === 'outstanding') {
+            title.innerText = "🚨 Net Outstanding Balances Due (Pagar Remaining)";
+            staff.forEach(w => {
+                let actualBase = (w.am || w.pm) ? w.baseWage : 0;
+                let balance = actualBase + w.doublingBonus - w.advance;
+                let textClass = balance >= 0 ? 'text-success' : 'text-danger fw-bold';
+                let labelExtra = balance < 0 ? ' (Owes Farm)' : '';
+                body.innerHTML += `<div class="modal-list-item"><span>${w.name} ${labelExtra}</span><strong class="${textClass}">Rs ${Math.round(balance)}</strong></div>`;
+            });
+        } else {
+            title.innerText = "📊 Calculation Details";
+            body.innerHTML = `<p class="text-muted p-2">Showing general system stats summary pass variables.</p>`;
+        }
+        document.getElementById("dashboardModal").style.display = "flex";
+    }
+
+    function closeDashboardModal(e) {
+        if (e.target === document.getElementById("dashboardModal")) {
+            document.getElementById("dashboardModal").style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>
